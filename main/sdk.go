@@ -51,8 +51,8 @@ func GetLinesFromFileAndJson(filename string, index int) []Log { //
 }
 
 func main() {
-	logdata := GetLinesFromFileAndJson("/mnt/sdc/data/clv_data/one_billion_all.txt", 1000000000)
-	//logdata := GetLinesFromFileAndJson("../resource/50w.txt", 500000) //  ../resource/50w.txt  /mnt/sdc/data/clv_data/one_billion_01.txt
+	//logdata := GetLinesFromFileAndJson("/mnt/sdc/data/clv_data/one_billion_all.txt", 1000000000)
+	logdata := GetLinesFromFileAndJson("../resource/50w.txt", 500000)      //  ../resource/50w.txt  /mnt/sdc/data/clv_data/one_billion_01.txt
 	host, err := url.Parse(fmt.Sprintf("http://%s:%d", "127.0.0.1", 8086)) // /write?db=clv&u=admin&p=At1314comi!
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +65,7 @@ func main() {
 
 	k := 0
 	i := 0
-	for k = 0; k < 10000000; k++ { //for k := 0; k < 5000; k++ 10000000
+	for k = 0; k < 5000; k++ { //for k := 0; k < 5000; k++ 10000000
 		pts := make([]client.Point, 0)
 		var index int64
 		for i = 100 * k; i < 100*k+100; i++ { //for i := 100 * k; i < 100*k+100; i++
