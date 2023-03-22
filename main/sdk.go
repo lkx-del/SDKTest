@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	client "github.com/influxdata/influxdb1-client"
 	"io"
 	"log"
 	"net/url"
 	"os"
 	"time"
+
+	client "github.com/influxdata/influxdb1-client"
 )
 
 type Log struct {
@@ -61,6 +62,24 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	q := client.Query{
+		Command: "drop database clv; create database clv",
+	}
+	if r, err := con.Query(q); err != nil {
+		fmt.Println("create database error:", r.Err)
+		log.Fatal(err)
+	}
+
+	q = client.Query{
+		Command:  "create measurement dlvTable(logs string field, index idx1 logs type text)",
+		Database: "clv",
+	}
+	if r, err := con.Query(q); err != nil {
+		fmt.Println("create measurment error:", r.Err)
+		log.Fatal(err)
+	}
+
 	s := time.Now().UnixMicro()
 
 	k := 0
